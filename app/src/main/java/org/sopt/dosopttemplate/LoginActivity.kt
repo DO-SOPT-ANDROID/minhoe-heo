@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.sign_in)
+        setContentView(R.layout.activity_login)
         binding = SignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             if (binding.etSignInId.text.toString() == id && binding.etSignInPw.text.toString() == pw) {
                 Toast.makeText(this, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(this, MainActivity::class.java).apply {
+                val intent = Intent(this, HomeActivity::class.java).apply {
                     putExtra("id", id)
                     putExtra("mbti", mbti)
                     putExtra("nickname", nickname)
@@ -48,17 +48,16 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-        private fun setResult() {
-            activityResult = registerForActivityResult(
-                ActivityResultContracts.StartActivityForResult()
-            ) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    id = result.data?.getStringExtra("id") ?: ""
-                    pw = result.data?.getStringExtra("pw") ?: ""
-                    nickname = result.data?.getStringExtra("nickname") ?: ""
-                    mbti = result.data?.getStringExtra("mbti") ?: ""
-                }
+    private fun setResult() {
+        activityResult = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                id = result.data?.getStringExtra("id") ?: ""
+                pw = result.data?.getStringExtra("pw") ?: ""
+                nickname = result.data?.getStringExtra("nickname") ?: ""
+                mbti = result.data?.getStringExtra("mbti") ?: ""
             }
         }
     }
-
+}
