@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ConcatAdapter
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
 
 class HomeFragment: Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() = requireNotNull(_binding){ "바인딩에러" }
+
 
     private val mockFriendList =listOf<Friend>(
         Friend(
@@ -22,11 +24,6 @@ class HomeFragment: Fragment() {
             profileImage = R.drawable.img_1,
             name = "양파쿵야",
             self_description = "돈벌기 힘들다",
-        ),
-        Friend(
-            profileImage = R.drawable.quokka,
-            name = "쿼카",
-            self_description = "안녕 나는 귀여운 쿼카야",
         ),
         Friend(
             profileImage = R.drawable.img_2,
@@ -47,8 +44,13 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val friendAdapter = FriendAdapter(requireContext())
-        binding.rvFriends.adapter= friendAdapter
+        val meAdapter = MeAdapter(requireContext())
+
+
         friendAdapter.setFriendList(mockFriendList)
+
+        val concatAdapter = ConcatAdapter(meAdapter, friendAdapter)
+        binding.rvFriends.adapter= concatAdapter
     }
 
     override fun onDestroyView() {
