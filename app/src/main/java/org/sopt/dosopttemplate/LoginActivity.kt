@@ -6,11 +6,11 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import org.sopt.dosopttemplate.databinding.SignInBinding
+import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: SignInBinding
+    private lateinit var binding: ActivityLoginBinding
     private lateinit var activityResult: ActivityResultLauncher<Intent>
     lateinit var id: String
     lateinit var pw: String
@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        binding = SignInBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setResult()
