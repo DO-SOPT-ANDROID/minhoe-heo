@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DoSoptTemplate</string>
     <string name="tv_signup"><u>회원가입 하기</u></string>
+    <string name="tv_do_android_bnv_title"><b>안봉이들 화이팅~!</b></string>
 </resources>
