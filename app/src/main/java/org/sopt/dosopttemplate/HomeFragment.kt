@@ -76,11 +76,14 @@ class HomeFragment: Fragment() {
 
         val concatAdapter = ConcatAdapter(meAdapter, friendAdapter)
         binding.rvFriends.adapter= concatAdapter
+
+        binding.fbAddFriend.setOnClickListener{
+        }
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
 }

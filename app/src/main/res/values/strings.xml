@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DoSoptTemplate</string>
     <string name="tv_signup"><u>회원가입 하기</u></string>
+    <string name="fab_content_desc" />
 </resources>
