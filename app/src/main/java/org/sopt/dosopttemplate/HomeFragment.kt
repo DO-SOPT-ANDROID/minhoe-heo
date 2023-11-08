@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ConcatAdapter
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
@@ -78,6 +79,7 @@ class HomeFragment: Fragment() {
         binding.rvFriends.adapter= concatAdapter
 
         binding.fbAddFriend.setOnClickListener{
+            Toast.makeText(requireContext(),"친구 추가를 할 수 없습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
