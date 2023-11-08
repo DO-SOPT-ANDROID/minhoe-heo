@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
+
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
@@ -36,10 +37,19 @@ class HomeFragment : Fragment() {
         val concatAdapter = ConcatAdapter(meAdapter, friendAdapter)
         binding.rvFriends.adapter = concatAdapter
 
+    }
+
+    fun addFriend(){
         binding.fbAddFriend.setOnClickListener {
-            Toast.makeText(requireContext(), "친구 추가를 할 수 없습니다.", Toast.LENGTH_SHORT).show()
+
+            val newFriend = Friend(
+                profileImage = R.drawable.ic_newperson_black_24,
+                name =
+            )
+
         }
     }
+
 
     override fun onDestroyView() {
         _binding = null
