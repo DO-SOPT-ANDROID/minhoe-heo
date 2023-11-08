@@ -3,7 +3,7 @@ package org.sopt.dosopttemplate
 import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
-    val mockFriendList = listOf<Friend>(
+    val mockFriendList = mutableListOf<Friend>(
         Friend(
             profileImage = R.drawable.img,
             name = "라이언",

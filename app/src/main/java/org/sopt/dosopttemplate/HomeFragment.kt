@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
+
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
@@ -35,9 +36,13 @@ class HomeFragment : Fragment() {
         val concatAdapter = ConcatAdapter(meAdapter, friendAdapter)
         binding.rvFriends.adapter = concatAdapter
 
+    }
+
+    fun addFriend(){
         binding.fbAddFriend.setOnClickListener {
         }
     }
+
 
     override fun onDestroyView() {
         _binding = null
