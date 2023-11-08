@@ -23,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
         clickBottomNavigation()
     }
 
+
     private fun clickBottomNavigation() {
         binding.bnvHome.setOnItemSelectedListener { item ->
 

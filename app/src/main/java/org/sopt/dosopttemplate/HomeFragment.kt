@@ -4,22 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ConcatAdapter
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
-    private lateinit var search: SearchView
-
-
+class HomeFragment: Fragment() {
+    private var _binding : FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
-        get() = requireNotNull(_binding) { "바인딩에러" }
+        get() = requireNotNull(_binding){ "바인딩에러" }
 
 
-    private val mockFriendList = listOf<Friend>(
+    private val mockFriendList =listOf<Friend>(
         Friend(
             profileImage = R.drawable.img,
             name = "라이언",
@@ -76,12 +71,13 @@ class HomeFragment : Fragment() {
         val friendAdapter = FriendAdapter(requireContext())
         val meAdapter = MeAdapter(requireContext())
 
+
         friendAdapter.setFriendList(mockFriendList)
 
         val concatAdapter = ConcatAdapter(meAdapter, friendAdapter)
-        binding.rvFriends.adapter = concatAdapter
-        binding.fbAddFriend.setOnClickListener {
-            Toast.makeText(requireContext(), "친구 추가를 할 수 없습니다.", Toast.LENGTH_SHORT).show()
+        binding.rvFriends.adapter= concatAdapter
+
+        binding.fbAddFriend.setOnClickListener{
         }
     }
 
@@ -89,6 +85,5 @@ class HomeFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
+
 }
-
-
