@@ -26,8 +26,13 @@ class DoAndroidFragment: Fragment() {
     }
 
     override fun onDestroyView() {
+<<<<<<< HEAD
         _binding = null
         super.onDestroyView()
+=======
+        super.onDestroyView()
+        _binding = null
+>>>>>>> develop
     }
 
 }
