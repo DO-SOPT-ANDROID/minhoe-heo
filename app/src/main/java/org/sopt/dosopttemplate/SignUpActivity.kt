@@ -5,6 +5,7 @@ import android.content.Intent
 import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.view.inputmethod.InputMethod
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
