@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -30,17 +30,19 @@ class HomeFragment : Fragment() {
         val friendAdapter = FriendAdapter(requireContext())
         val meAdapter = MeAdapter(requireContext())
 
-
         friendAdapter.setFriendList(viewModel.mockFriendList)
 
         val concatAdapter = ConcatAdapter(meAdapter, friendAdapter)
         binding.rvFriends.adapter = concatAdapter
 
+        binding.fbAddFriend.setOnClickListener {
+            showAddFriendEditText()
+        }
     }
 
-    fun addFriend(){
-        binding.fbAddFriend.setOnClickListener {
-        }
+    private fun showAddFriendEditText() {
+        val dialog = CustomDialog()
+        dialog.show(requireActivity().supportFragmentManager, "CustomDialog")
     }
 
 
@@ -48,5 +50,5 @@ class HomeFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
-
 }
+
