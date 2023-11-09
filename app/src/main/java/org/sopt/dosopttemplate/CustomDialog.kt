@@ -17,6 +17,7 @@ class CustomDialog: DialogFragment() {
         _binding = DialogBinding.inflate(inflater, container, false)
         val view = binding.root
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_rounded_corners)
 
         binding.btCcl.setOnClickListener {
             dismiss()
