@@ -24,7 +24,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_friend" />
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fb_add_friend"
         android:layout_width="wrap_content"
@@ -48,7 +47,6 @@
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        app:layout_constraintVertical_weight="1"-->
 <!--        app:queryHint="검색어를 입력하시오" />-->
-
 
 
 
