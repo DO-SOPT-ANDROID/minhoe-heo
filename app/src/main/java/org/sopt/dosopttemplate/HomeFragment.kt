@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
@@ -21,7 +20,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -31,23 +30,19 @@ class HomeFragment : Fragment() {
         val friendAdapter = FriendAdapter(requireContext())
         val meAdapter = MeAdapter(requireContext())
 
-
         friendAdapter.setFriendList(viewModel.mockFriendList)
 
         val concatAdapter = ConcatAdapter(meAdapter, friendAdapter)
         binding.rvFriends.adapter = concatAdapter
 
+        binding.fbAddFriend.setOnClickListener {
+            showAddFriendEditText()
+        }
     }
 
-    fun addFriend(){
-        binding.fbAddFriend.setOnClickListener {
-
-            val newFriend = Friend(
-                profileImage = R.drawable.ic_newperson_black_24,
-                name =
-            )
-
-        }
+    private fun showAddFriendEditText() {
+        val dialog = CustomDialog()
+        dialog.show(requireActivity().supportFragmentManager, "CustomDialog")
     }
 
 
@@ -55,5 +50,5 @@ class HomeFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
-
 }
+
