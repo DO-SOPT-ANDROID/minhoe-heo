@@ -31,21 +31,19 @@
         android:textSize="20sp"
         android:gravity="center"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_ccl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary"
         android:text="취소"
         app:layout_constraintTop_toBottomOf="@+id/et_dia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary"
         android:text="확인"
         app:layout_constraintTop_toBottomOf="@+id/et_dia"
         app:layout_constraintStart_toEndOf="@+id/bt_ccl"

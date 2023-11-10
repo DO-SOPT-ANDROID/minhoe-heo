@@ -42,6 +42,7 @@
             android:id="@+id/et_sign_up_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:hint="PASSWORD" />
     </com.google.android.material.textfield.TextInputLayout>
 
