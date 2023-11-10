@@ -5,14 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="검색어를 입력하세요"
+        android:drawableStart="@android:drawable/ic_menu_search"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_friends"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/et_search"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="169dp"
         tools:listitem="@layout/item_friend" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,16 +36,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1"
-        app:queryHint="검색어를 입력하시오"
-        android:background="@color/white"/>
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:id="@+id/search"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/white"-->
+<!--        android:focusable="true"-->
+<!--        app:iconifiedByDefault="false"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_weight="1"-->
+<!--        app:queryHint="검색어를 입력하시오" />-->
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
