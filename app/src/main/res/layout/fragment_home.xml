@@ -50,6 +50,4 @@
         app:queryHint="검색어를 입력하시오"
         android:background="@color/white"/>
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

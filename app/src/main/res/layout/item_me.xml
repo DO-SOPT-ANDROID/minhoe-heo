@@ -15,7 +15,8 @@
         app:cardCornerRadius="80dp"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/image_rounded_corners"/>
 
     <TextView
         android:id="@+id/tv_my_name"
