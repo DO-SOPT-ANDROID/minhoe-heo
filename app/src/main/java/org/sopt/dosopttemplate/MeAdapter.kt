@@ -12,6 +12,7 @@ class MeAdapter(context: Context) : RecyclerView.Adapter<MeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeViewHolder {
         val binding = ItemMeBinding.inflate(inflater, parent, false)
+        binding.ivMyProfile.clipToOutline = true
         return MeViewHolder(binding)
     }
 

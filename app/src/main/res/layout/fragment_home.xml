@@ -12,7 +12,7 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="26dp"
+        tools:layout_editor_absoluteY="169dp"
         tools:listitem="@layout/item_friend" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
