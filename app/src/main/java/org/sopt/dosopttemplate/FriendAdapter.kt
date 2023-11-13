@@ -12,6 +12,7 @@ class FriendAdapter(context: Context) : RecyclerView.Adapter<FriendViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendViewHolder {
         val binding = ItemFriendBinding.inflate(inflater, parent, false)
+        binding.ivProfile.clipToOutline = true
         return FriendViewHolder(binding)
     }
 
