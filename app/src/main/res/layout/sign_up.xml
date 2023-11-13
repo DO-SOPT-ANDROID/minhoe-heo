@@ -31,9 +31,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="아이디를 입력해주세요"
+        android:inputType="text"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_id"
         tools:ignore="TouchTargetSizeCheck" />
-
     <TextView
         android:id="@+id/tv_sign_up_pw"
         android:layout_width="match_parent"
@@ -49,7 +51,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="비밀번호를 입력해주세요"
+        android:singleLine="true"
         android:inputType="textPassword"
+        android:imeOptions="actionDone"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_pw"
         tools:ignore="TouchTargetSizeCheck" />
 
@@ -68,6 +72,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="닉네임을 입력해주세요"
+        android:inputType="text"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_name"
         tools:ignore="TouchTargetSizeCheck" />
 
@@ -86,7 +93,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="mbti를 입력해주세요"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_up_mbti"
+        android:inputType="textCapCharacters"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
