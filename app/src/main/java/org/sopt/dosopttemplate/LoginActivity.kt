@@ -8,7 +8,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import org.sopt.dosopttemplate.ServicePool.authService
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
+import retrofit2.Call
+import retrofit2.Response
 
 
 class LoginActivity : AppCompatActivity() {
@@ -52,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.root.setOnClickListener{
+        binding.root.setOnClickListener {
             hideKeyboard()
         }
     }
@@ -79,6 +82,38 @@ class LoginActivity : AppCompatActivity() {
                 nickname = result.data?.getStringExtra("nickname") ?: ""
                 mbti = result.data?.getStringExtra("mbti") ?: ""
             }
+        }
+    }
+
+    private fun login() {
+        val id = binding.etSignInId.text.toString()
+        val password = binding.etSignInPw.text.toString()
+
+        binding.signIn.setOnClickListener {
+            authService.login(RequestLoginDto(id, password))
+                .enqueue(object : retrofit2.Callback<ResponseLoginDto> {
+                    override fun onResponse(
+                        call: Call<ResponseLoginDto>,
+                        response: Response<ResponseLoginDto>,
+                    ) {
+                        if (response.isSuccessful) {
+                            val data: ResponseLoginDto = response.body()!!
+                            val userId = data.id
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "로그인이 성공하였고 유저의 ID는 $userId 입니둥",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+
+                            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
+                        Toast.makeText(this@LoginActivity, "서버 에러 발생", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
     }
 }
