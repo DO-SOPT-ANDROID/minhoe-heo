@@ -3,6 +3,7 @@ package org.sopt.dosopttemplate
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -10,7 +11,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import org.sopt.dosopttemplate.ServicePool.authService
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
+import org.sopt.dosopttemplate.request.RequestLoginDto
+import org.sopt.dosopttemplate.response.ResponseLoginDto
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 
@@ -36,24 +40,7 @@ class LoginActivity : AppCompatActivity() {
             activityResult.launch(intent)
         }
 
-        binding.signIn.setOnClickListener {
-            if (binding.etSignInId.text.toString() == id && binding.etSignInPw.text.toString() == pw) {
-                Toast.makeText(this, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, HomeActivity::class.java).apply {
-                    putExtra("id", id)
-                    putExtra("mbti", mbti)
-                    putExtra("nickname", nickname)
-                    putExtra("pw", pw)
-                }
-
-                startActivity(intent)
-                finish()
-
-            } else {
-                Toast.makeText(this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
-            }
-        }
+        login()
 
         binding.root.setOnClickListener {
             hideKeyboard()
@@ -69,6 +56,23 @@ class LoginActivity : AppCompatActivity() {
                 this.currentFocus?.windowToken,
                 InputMethodManager.HIDE_NOT_ALWAYS
             )
+        }
+    }
+
+    private fun canLogin() {
+        if (binding.etSignInId.text.toString() == id && binding.etSignInPw.text.toString() == pw) {
+            val intent = Intent(this, HomeActivity::class.java).apply {
+                putExtra("id", id)
+                putExtra("mbti", mbti)
+                putExtra("nickname", nickname)
+                putExtra("pw", pw)
+            }
+
+            startActivity(intent)
+            finish()
+
+        } else {
+            Toast.makeText(this, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -91,14 +95,17 @@ class LoginActivity : AppCompatActivity() {
 
         binding.signIn.setOnClickListener {
             authService.login(RequestLoginDto(id, password))
-                .enqueue(object : retrofit2.Callback<ResponseLoginDto> {
+                .enqueue(object : Callback<ResponseLoginDto> {
                     override fun onResponse(
                         call: Call<ResponseLoginDto>,
                         response: Response<ResponseLoginDto>,
                     ) {
+                        Log.e("여기는","왜 ")
                         if (response.isSuccessful) {
+                            Log.e("로그인","login success")
                             val data: ResponseLoginDto = response.body()!!
                             val userId = data.id
+                            //canLogin()
                             Toast.makeText(
                                 this@LoginActivity,
                                 "로그인이 성공하였고 유저의 ID는 $userId 입니둥",
@@ -107,6 +114,9 @@ class LoginActivity : AppCompatActivity() {
 
                             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                             startActivity(intent)
+                        }
+                        else{
+                            Log.e("로그인","login fail")
                         }
                     }
 
