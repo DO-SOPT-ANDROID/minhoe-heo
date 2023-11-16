@@ -1,15 +1,12 @@
-package org.sopt.dosopttemplate
+package org.sopt.dosopttemplate.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseLoginDto(
-    @SerialName("id")
-    val id: Int,
+data class RequestLoginDto(
     @SerialName("username")
     val username: String,
     @SerialName("password")
-    val password: String,
+    val password: String
 )
-
