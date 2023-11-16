@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="300dp"
-        android:text="안봉이들 화이팅"
+        android:text="@string/tv_do_android_bnv_title"
         android:textSize="30dp"
         android:textAlignment="center"
         />

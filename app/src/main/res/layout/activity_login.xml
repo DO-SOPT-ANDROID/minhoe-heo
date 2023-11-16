@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Welcome to Sopt"
+        android:text="@string/tv_sign_in_title"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:hint="ID"
+        android:hint="@string/tf_id"
         app:layout_constraintTop_toBottomOf="@id/tv_sign_in_title">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:hint="PASSWORD"
+        android:hint="@string/tf_pw"
         app:layout_constraintTop_toBottomOf="@id/tf_id">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
-        android:text="로그인 하기"
+        android:text="@string/sign_in"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView

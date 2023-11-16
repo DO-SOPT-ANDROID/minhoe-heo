@@ -4,4 +4,19 @@
     <string name="fab_content_desc" />
     <string name="searchbar_scrolling_view_behavior" />
     <string name="searchbar_hint" />
+    <string name="tv_name">허민회</string>
+    <string name="tv_email">hhmmm1005@naver.com</string>
+    <string name="tv_sign_up_title">SIGN UP</string>
+    <string name="et_sign_up_id">ID</string>
+    <string name="et_sign_up_pw">PASSWORD</string>
+    <string name="et_sign_up_name">닉네임</string>
+    <string name="et_sign_up_mbti">MBTI</string>
+    <string name="sign_up">회원가입 하기</string>
+    <string name="tv_sign_in_title">Welcome to Sopt</string>
+    <string name="tf_id">ID</string>
+    <string name="tf_pw">PASSWORD</string>
+    <string name="sign_in">로그인 하기</string>
+    <string name="tv_do_android_bnv_title">안봉이들 화이팅</string>
+    <string name="main_id">ID</string>
+    <string name="main_mbti">MBTI</string>
 </resources>
