@@ -15,7 +15,7 @@ class FollowerViewModel : ViewModel() {
     private var _followerData = MutableLiveData<List<ResponseFollowerDto.FollowerData>?>()
     var followerData = _followerData
 
-    //TODO 서버에서 ui 관련 정보 받아오기
+    //서버에서 ui 관련 정보 받아오기
     fun loadFollowerData() {
         ServicePool.followerService.follower().enqueue(object : Callback<ResponseFollowerDto> {
             override fun onResponse(
@@ -27,7 +27,6 @@ class FollowerViewModel : ViewModel() {
                     val followerList: List<ResponseFollowerDto.FollowerData>? =
                         response.body()?.data
                     _followerData.value = followerList
-
                 }
             }
 
@@ -37,39 +36,3 @@ class FollowerViewModel : ViewModel() {
         })
     }
 }
-/*class FollowerViewModel : ViewModel() {
-
-    private var _followerData = MutableLiveData<List<ResponseFollowerDto.FollowerData>>()
-    var followerData = _followerData
-
-    //TODO 서버에서 ui 관련 정보 받아오기
-    fun loadFollowerData() {
-        ServicePool.followerService.follower().enqueue(object : Callback<ResponseFollowerDto> {
-            override fun onResponse(
-                call: Call<ResponseFollowerDto>,
-                response: Response<ResponseFollowerDto>
-            ) {
-                if (response.isSuccessful) {
-                    Log.e("서버 통신 성공", response.body()?.data.toString())
-                    val followerList: List<ResponseFollowerDto.FollowerData>? = response.body()?.data
-
-                    _followerData.value = followerList!!
-                    /*_followerData.value = response.body()?.data?.map {
-                        Follower(
-                            firstName= it.firstName,
-                            email = it.email,
-                            avatar = it.avatar
-                        )
-                    }*/
-                } else {
-                    Log.e("error", response.errorBody().toString())
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseFollowerDto>, t: Throwable) {
-                Log.e("서버 통신 실패", t.message.toString())
-            }
-        })
-    }
-
-}*/
