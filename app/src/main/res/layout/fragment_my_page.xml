@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/image"
         android:layout_marginTop="20dp"
-        android:text="ID"
+        android:text="@string/main_id"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/your_id"
         android:layout_marginTop="20dp"
-        android:text="MBTI"
+        android:text="@string/main_mbti"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent" />
 
