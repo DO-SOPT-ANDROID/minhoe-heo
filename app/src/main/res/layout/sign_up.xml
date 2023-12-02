@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingHorizontal="20dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_sign_up_title"
+    <data>
+
+        <variable
+            name="authSignUpViewModel"
+            type="org.sopt.dosopttemplate.AuthViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/tv_sign_up_title"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp">
 
-    <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/tv_sign_up_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/tv_sign_up_title"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tv_sign_up_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,13 +86,15 @@
             android:inputType="textCapCharacters" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:text="@string/sign_up"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <Button
+            android:id="@+id/sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:text="@string/sign_up"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

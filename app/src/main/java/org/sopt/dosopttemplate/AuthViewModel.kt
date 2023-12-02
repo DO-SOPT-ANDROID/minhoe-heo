@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.ServicePool.authService
 import org.sopt.dosopttemplate.request.RequestLoginDto
+import org.sopt.dosopttemplate.request.RequestSignUpDto
 import org.sopt.dosopttemplate.response.ResponseLoginDto
 
 class AuthViewModel : ViewModel() {
@@ -18,6 +19,14 @@ class AuthViewModel : ViewModel() {
     private var _loginResult = MutableLiveData<ResponseLoginDto>()
     val loginResult: MutableLiveData<ResponseLoginDto>
         get() = _loginResult
+
+    private val _signUpSuccess = MutableLiveData<Boolean>()
+    val signUpSuccess: MutableLiveData<Boolean>
+        get() = _signUpSuccess
+
+    private var _signUpResult = MutableLiveData<Unit>()
+    val signUpResult: MutableLiveData<Unit>
+        get() = _signUpResult
 
     val isLoginButtonClicked: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -38,6 +47,18 @@ class AuthViewModel : ViewModel() {
                 }
             }.onFailure {
                 Log.e("LoginNetwork", "error:$it")
+            }
+        }
+    }
+
+    fun signUp(id: String, password: String, nickname: String, mbti: String) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                authService.signUp(RequestSignUpDto(id, password, nickname, mbti))
+            }.onSuccess {
+                signUpSuccess.value = true
+            }.onFailure {
+                Log.e("SignUpNetwork", "error:$it")
             }
         }
     }

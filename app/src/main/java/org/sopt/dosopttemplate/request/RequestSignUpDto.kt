@@ -5,10 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RequestSignUpDto(
-    @SerialName("username")
-    val username: String,
+    @SerialName("id")
+    val id: String,
     @SerialName("password")
     val password: String,
     @SerialName("nickname")
-    val nickname: String
+    val nickname: String,
+    @SerialName("mbti")
+    val mbti: String
 )

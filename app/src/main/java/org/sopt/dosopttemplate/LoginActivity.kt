@@ -3,29 +3,23 @@ package org.sopt.dosopttemplate
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import org.sopt.dosopttemplate.ServicePool.authService
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
-import org.sopt.dosopttemplate.request.RequestLoginDto
-import org.sopt.dosopttemplate.response.ResponseLoginDto
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val authViewModel by viewModels<AuthViewModel>()
     private lateinit var activityResult: ActivityResultLauncher<Intent>
     lateinit var id: String
     lateinit var pw: String
     lateinit var nickname: String
     lateinit var mbti: String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +34,16 @@ class LoginActivity : AppCompatActivity() {
             activityResult.launch(intent)
         }
 
+        observeLoginResult()
         login()
 
         binding.root.setOnClickListener {
             hideKeyboard()
         }
+
+        binding.lifecycleOwner = this
+        binding.authViewModel = authViewModel
+
     }
 
     private fun hideKeyboard() {
@@ -85,45 +84,37 @@ class LoginActivity : AppCompatActivity() {
                 pw = result.data?.getStringExtra("pw") ?: ""
                 nickname = result.data?.getStringExtra("nickname") ?: ""
                 mbti = result.data?.getStringExtra("mbti") ?: ""
+
+                canLogin()
+            }
+        }
+    }
+
+    private fun observeLoginResult() {
+        authViewModel.loginSuccess.observe(this) {
+            if (it) {
+                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                startActivity(
+                    Intent(
+                        this,
+                        HomeActivity::class.java,
+                    ),
+                )
+            } else {
+                Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun login() {
-        val id = binding.etSignInId.text.toString()
-        val password = binding.etSignInPw.text.toString()
-
         binding.signIn.setOnClickListener {
-            authService.login(RequestLoginDto(id, password))
-                .enqueue(object : Callback<ResponseLoginDto> {
-                    override fun onResponse(
-                        call: Call<ResponseLoginDto>,
-                        response: Response<ResponseLoginDto>,
-                    ) {
-                        Log.e("여기는","왜 ")
-                        if (response.isSuccessful) {
-                            Log.e("로그인","login success")
-                            val data: ResponseLoginDto = response.body()!!
-                            val userId = data.id
-                            //canLogin()
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "로그인이 성공하였고 유저의 ID는 $userId 입니둥",
-                                Toast.LENGTH_SHORT,
-                            ).show()
+            val id = binding.etSignInId.text.toString()
+            val password = binding.etSignInPw.text.toString()
 
-                            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                            startActivity(intent)
-                        }
-                        else{
-                            Log.e("로그인","login fail")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-                        Toast.makeText(this@LoginActivity, "서버 에러 발생", Toast.LENGTH_SHORT).show()
-                    }
-                })
+            authViewModel.login(
+                id = id,
+                password = password
+            )
         }
     }
 }
