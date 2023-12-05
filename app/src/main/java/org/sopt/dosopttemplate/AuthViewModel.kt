@@ -1,6 +1,7 @@
 package org.sopt.dosopttemplate
 
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,15 +25,35 @@ class AuthViewModel : ViewModel() {
     val signUpSuccess: MutableLiveData<Boolean>
         get() = _signUpSuccess
 
-    private var _signUpResult = MutableLiveData<Unit>()
-    val signUpResult: MutableLiveData<Unit>
-        get() = _signUpResult
+    val username = MutableLiveData("")
+    val password = MutableLiveData("")
+    val nickname = MutableLiveData("")
+    val mbti = MutableLiveData("")
 
     val isLoginButtonClicked: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun onLoginButtonClick() {
         isLoginButtonClicked.value = true
     }
+
+    val checkBtnEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(username) { value = isSignUpValid() }
+        addSource(nickname) { value = isSignUpValid() }
+        addSource(password) { value = isSignUpValid() }
+        addSource(mbti) { value = isSignUpValid() }
+        Log.d("signup", "싸인업")
+    }
+
+    private fun isSignUpValid(): Boolean {
+        Log.e("signupnetwork", "싸인업")
+        return isIdValid()
+                && isPwValid()
+                && !nickname.value.isNullOrBlank()
+                && !mbti.value.isNullOrBlank()
+    }
+
+    fun isIdValid() = username.value?.matches(ID_REGEX.toRegex()) ?: false
+    fun isPwValid() = password.value?.matches(PW_REGEX.toRegex()) ?: false
 
     fun login(id: String, password: String) {
         viewModelScope.launch {
@@ -51,15 +72,23 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun signUp(id: String, password: String, nickname: String, mbti: String) {
+    fun signUp(username: String, password: String, nickname: String) {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.signUp(RequestSignUpDto(id, password, nickname, mbti))
+                authService.signUp(RequestSignUpDto(username, password, nickname))
             }.onSuccess {
-                signUpSuccess.value = true
+                _signUpSuccess.value = true
             }.onFailure {
+                _signUpSuccess.value = false
                 Log.e("SignUpNetwork", "error:$it")
             }
         }
     }
+
+    companion object {
+        const val ID_REGEX = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}\$"
+        const val PW_REGEX =
+            "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&.])[A-Za-z[0-9]\$@\$!%*#?&.]{6,12}\$"
+    }
 }
+
