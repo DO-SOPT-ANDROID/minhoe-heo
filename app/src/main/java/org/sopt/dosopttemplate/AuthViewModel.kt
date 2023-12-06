@@ -30,11 +30,8 @@ class AuthViewModel : ViewModel() {
     val nickname = MutableLiveData("")
     val mbti = MutableLiveData("")
 
-    val isLoginButtonClicked: MutableLiveData<Boolean> = MutableLiveData(false)
-
-    fun onLoginButtonClick() {
-        isLoginButtonClicked.value = true
-    }
+    val usernameLogin = MutableLiveData("")
+    val passwordLogin = MutableLiveData("")
 
     val checkBtnEnabled = MediatorLiveData<Boolean>().apply {
         addSource(username) { value = isSignUpValid() }
@@ -55,15 +52,21 @@ class AuthViewModel : ViewModel() {
     fun isIdValid() = username.value?.matches(ID_REGEX.toRegex()) ?: false
     fun isPwValid() = password.value?.matches(PW_REGEX.toRegex()) ?: false
 
-    fun login(id: String, password: String) {
+    fun login() {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.login(RequestLoginDto(id, password))
+                authService.login(
+                    RequestLoginDto(
+                        username.value.toString(),
+                        password.value.toString()
+                    )
+                )
             }.onSuccess {
                 if (it.isSuccessful) {
                     loginResult.value = it.body()
                     loginSuccess.value = true
                 } else {
+                    Log.d("login", "로그인 실패")
                     loginSuccess.value = false
                 }
             }.onFailure {
@@ -72,10 +75,16 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun signUp(username: String, password: String, nickname: String) {
+    fun signUp() {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.signUp(RequestSignUpDto(username, password, nickname))
+                authService.signUp(
+                    RequestSignUpDto(
+                        username.value.toString(),
+                        password.value.toString(),
+                        nickname.value.toString()
+                    )
+                )
             }.onSuccess {
                 _signUpSuccess.value = true
             }.onFailure {
