@@ -52,27 +52,30 @@ class AuthViewModel : ViewModel() {
     fun isIdValid() = id.value?.matches(ID_REGEX.toRegex()) ?: false
     fun isPwValid() = password.value?.matches(PW_REGEX.toRegex()) ?: false
 
+
     fun login() {
         viewModelScope.launch {
-            kotlin.runCatching {
-                authService.login(
+            try {
+                val response = authService.login(
                     RequestLoginDto(
                         loginId.value ?: "",
                         loginPassword.value ?: ""
                     )
                 )
-            }.onSuccess {
-                Log.e("Login response", "${it.body()},${it.code()}")
-                if (it.code() == 200) {
-                    loginResult.value = it.body()
+                if (response.code() == 200) {
+                    loginResult.value = response.body()
                     _isLoginSuccessful.value = true
-                }
-                if (it.code() == 400) {
-                    Log.d("login", "${it}")
+                } else if (response.code() == 400) {
+                    val errorBody = response.errorBody()?.string()
+                    Log.d("login", "$errorBody")
+                    _isLoginSuccessful.value = false
+                } else {
+                    Log.e("LoginNetwork", "HTTP Error: ${response.code()}")
                     _isLoginSuccessful.value = false
                 }
-            }.onFailure {
-                Log.e("LoginNetwork", "error:$it")
+            } catch (e: Exception) {
+                Log.e("LoginNetwork", "Error: ${e.message}")
+                _isLoginSuccessful.value = false
             }
         }
     }
@@ -83,8 +86,8 @@ class AuthViewModel : ViewModel() {
                 authService.signUp(
                     RequestSignUpDto(
                         id.value ?: "",
-                        password.value ?: "",
-                        nickname.value ?: ""
+                        nickname.value ?: "",
+                        password.value ?: ""
                     )
                 )
             }.onSuccess {
