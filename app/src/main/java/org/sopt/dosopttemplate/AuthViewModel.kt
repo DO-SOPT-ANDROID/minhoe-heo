@@ -13,11 +13,11 @@ import org.sopt.dosopttemplate.response.ResponseLoginDto
 
 class AuthViewModel : ViewModel() {
 
-    private val _loginSuccess = MutableLiveData<Boolean>()
+    private val _isLoginSuccessful = MutableLiveData<Boolean>()
     val loginSuccess: MutableLiveData<Boolean>
-        get() = _loginSuccess
+        get() = _isLoginSuccessful
 
-    private var _loginResult = MutableLiveData<ResponseLoginDto>()
+    private val _loginResult = MutableLiveData<ResponseLoginDto>()
     val loginResult: MutableLiveData<ResponseLoginDto>
         get() = _loginResult
 
@@ -25,16 +25,16 @@ class AuthViewModel : ViewModel() {
     val signUpSuccess: MutableLiveData<Boolean>
         get() = _signUpSuccess
 
-    val username = MutableLiveData("")
+    val id = MutableLiveData("")
     val password = MutableLiveData("")
     val nickname = MutableLiveData("")
     val mbti = MutableLiveData("")
 
-    val usernameLogin = MutableLiveData("")
-    val passwordLogin = MutableLiveData("")
+    val loginId = MutableLiveData("")
+    val loginPassword = MutableLiveData("")
 
     val checkBtnEnabled = MediatorLiveData<Boolean>().apply {
-        addSource(username) { value = isSignUpValid() }
+        addSource(id) { value = isSignUpValid() }
         addSource(nickname) { value = isSignUpValid() }
         addSource(password) { value = isSignUpValid() }
         addSource(mbti) { value = isSignUpValid() }
@@ -49,7 +49,7 @@ class AuthViewModel : ViewModel() {
                 && !mbti.value.isNullOrBlank()
     }
 
-    fun isIdValid() = username.value?.matches(ID_REGEX.toRegex()) ?: false
+    fun isIdValid() = id.value?.matches(ID_REGEX.toRegex()) ?: false
     fun isPwValid() = password.value?.matches(PW_REGEX.toRegex()) ?: false
 
     fun login() {
@@ -57,17 +57,19 @@ class AuthViewModel : ViewModel() {
             kotlin.runCatching {
                 authService.login(
                     RequestLoginDto(
-                        username.value.toString(),
-                        password.value.toString()
+                        loginId.value ?: "",
+                        loginPassword.value ?: ""
                     )
                 )
             }.onSuccess {
-                if (it.isSuccessful) {
+                Log.e("Login response", "${it.body()},${it.code()}")
+                if (it.code() == 200) {
                     loginResult.value = it.body()
-                    loginSuccess.value = true
-                } else {
-                    Log.d("login", "로그인 실패")
-                    loginSuccess.value = false
+                    _isLoginSuccessful.value = true
+                }
+                if (it.code() == 400) {
+                    Log.d("login", "${it}")
+                    _isLoginSuccessful.value = false
                 }
             }.onFailure {
                 Log.e("LoginNetwork", "error:$it")
@@ -80,9 +82,9 @@ class AuthViewModel : ViewModel() {
             kotlin.runCatching {
                 authService.signUp(
                     RequestSignUpDto(
-                        username.value.toString(),
-                        password.value.toString(),
-                        nickname.value.toString()
+                        id.value ?: "",
+                        password.value ?: "",
+                        nickname.value ?: ""
                     )
                 )
             }.onSuccess {
@@ -95,8 +97,8 @@ class AuthViewModel : ViewModel() {
     }
 
     companion object {
-        const val ID_REGEX = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}\$"
-        const val PW_REGEX =
+        private const val ID_REGEX = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{6,10}\$"
+        private const val PW_REGEX =
             "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&.])[A-Za-z[0-9]\$@\$!%*#?&.]{6,12}\$"
     }
 }
