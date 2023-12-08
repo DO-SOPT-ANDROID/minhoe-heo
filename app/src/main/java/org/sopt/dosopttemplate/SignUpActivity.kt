@@ -18,17 +18,16 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        signUp()
+        binding.lifecycleOwner = this
+        binding.authSignUpViewModel = authSignUpViewModel
+
         checkIdValid()
         checkPwValid()
+        signUp()
 
         binding.root.setOnClickListener {
             hideKeyboard(binding.root)
         }
-
-        binding.lifecycleOwner = this
-        binding.authSignUpViewModel = authSignUpViewModel
-
     }
 
     private fun checkIdValid() {

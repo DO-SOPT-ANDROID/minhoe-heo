@@ -19,22 +19,23 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.lifecycleOwner = this
+        binding.authViewModel = authViewModel
+
+        observeLoginResult()
+        addClickListener()
+    }
+
+    fun addClickListener() {
         binding.signUp.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
-        observeLoginResult()
-
         binding.root.setOnClickListener {
             hideKeyboard(binding.root)
         }
-
-        binding.lifecycleOwner = this
-        binding.authViewModel = authViewModel
-
     }
-
 
     private fun observeLoginResult() {
         authViewModel.isLoginSuccessful.observe(this) {
