@@ -14,16 +14,16 @@ import org.sopt.dosopttemplate.response.ResponseLoginDto
 class AuthViewModel : ViewModel() {
 
     private val _isLoginSuccessful = MutableLiveData<Boolean>()
-    val loginSuccess: MutableLiveData<Boolean>
+    val isLoginSuccessful: MutableLiveData<Boolean>
         get() = _isLoginSuccessful
 
     private val _loginResult = MutableLiveData<ResponseLoginDto>()
     val loginResult: MutableLiveData<ResponseLoginDto>
         get() = _loginResult
 
-    private val _signUpSuccess = MutableLiveData<Boolean>()
-    val signUpSuccess: MutableLiveData<Boolean>
-        get() = _signUpSuccess
+    private val _isSignUpSuccessful = MutableLiveData<Boolean>()
+    val isSignUpSuccessful: MutableLiveData<Boolean>
+        get() = _isSignUpSuccessful
 
     val id = MutableLiveData("")
     val password = MutableLiveData("")
@@ -34,11 +34,9 @@ class AuthViewModel : ViewModel() {
     val loginPassword = MutableLiveData("")
 
     val checkBtnEnabled = MediatorLiveData<Boolean>().apply {
-        addSource(id) { value = isSignUpValid() }
-        addSource(nickname) { value = isSignUpValid() }
-        addSource(password) { value = isSignUpValid() }
-        addSource(mbti) { value = isSignUpValid() }
-        Log.d("signup", "싸인업")
+        listOf(id, nickname, password, mbti).forEach { source ->
+            addSource(source) { value = isSignUpValid() }
+        }
     }
 
     private fun isSignUpValid(): Boolean {
@@ -91,9 +89,9 @@ class AuthViewModel : ViewModel() {
                     )
                 )
             }.onSuccess {
-                _signUpSuccess.value = true
+                _isSignUpSuccessful.value = true
             }.onFailure {
-                _signUpSuccess.value = false
+                _isSignUpSuccessful.value = false
                 Log.e("SignUpNetwork", "error:$it")
             }
         }

@@ -33,28 +33,27 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun checkIdValid() {
         authSignUpViewModel.id.observe(this) { id ->
-            Log.e("id", "${id}")
-            if (id.isNullOrBlank() || authSignUpViewModel.isIdValid()) {
-                binding.tvSignUpId.error = null
-            } else if (!authSignUpViewModel.isIdValid()) {
+            if (!id.isNullOrBlank() && !authSignUpViewModel.isIdValid()) {
                 binding.tvSignUpId.error = "영문, 숫자를 포함해 6-10자 이내로 쓰십시오"
+            } else {
+                binding.tvSignUpId.error = null
             }
         }
+
     }
 
     private fun checkPwValid() {
         authSignUpViewModel.password.observe(this) { password ->
-            Log.e("password", "${password}")
-            if (password.isNullOrBlank() || authSignUpViewModel.isPwValid()) {
-                binding.tvSignUpPw.error = null
-            } else if (!authSignUpViewModel.isPwValid()) {
+            if (!password.isNullOrBlank() && !authSignUpViewModel.isPwValid()) {
                 binding.tvSignUpPw.error = "영문,숫자,특수문자를 포함해 6-12자 이내로 쓰십시오"
+            } else {
+                binding.tvSignUpPw.error = null
             }
         }
     }
 
     private fun signUp() {
-        authSignUpViewModel.signUpSuccess.observe(this) {
+        authSignUpViewModel.isSignUpSuccessful.observe(this) {
             Log.e("signup", "${it}")
             if (it) {
                 Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()

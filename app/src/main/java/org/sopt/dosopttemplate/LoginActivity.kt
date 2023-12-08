@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun observeLoginResult() {
-        authViewModel.loginSuccess.observe(this) {
+        authViewModel.isLoginSuccessful.observe(this) {
             if (it) {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                 startActivity(
