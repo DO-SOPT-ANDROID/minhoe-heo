@@ -37,7 +37,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sign_in_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@={authViewModel.loginId}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -52,19 +53,9 @@
                 android:id="@+id/et_sign_in_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={authViewModel.loginPassword}" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_databinding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@{authViewModel.isLoginButtonClicked ? `로그인 버튼이 클릭되었습니다.` : `로그인 버튼을 클릭해주세요.`}"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@id/tf_pw"
-            app:layout_constraintStart_toStartOf="@id/tf_pw"
-            app:layout_constraintTop_toBottomOf="@id/tf_pw" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sign_in"
@@ -72,8 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="60dp"
             android:text="@string/sign_in"
+            android:onClick="@{()->authViewModel.login()}"
             android:background="@drawable/rectangle_btn_pink"
-            android:onClick="@{() -> authViewModel.onLoginButtonClick()}"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView

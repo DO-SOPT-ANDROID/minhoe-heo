@@ -1,22 +1,21 @@
 package org.sopt.dosopttemplate
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import org.sopt.dosopttemplate.databinding.SignUpBinding
+import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
+import org.sopt.dosopttemplate.extension.hideKeyboard
 
 class SignUpActivity : AppCompatActivity() {
-    private lateinit var binding: SignUpBinding
+    private lateinit var binding: ActivitySignUpBinding
     private val authSignUpViewModel by viewModels<AuthViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.sign_up)
-        binding = SignUpBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_sign_up)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         signUp()
@@ -24,7 +23,7 @@ class SignUpActivity : AppCompatActivity() {
         checkPwValid()
 
         binding.root.setOnClickListener {
-            hideKeyboard()
+            hideKeyboard(binding.root)
         }
 
         binding.lifecycleOwner = this
@@ -32,20 +31,8 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-    private fun hideKeyboard() {
-        if (this != null && this.currentFocus != null) {
-            val inputManager: InputMethodManager = this.getSystemService(
-                Context.INPUT_METHOD_SERVICE
-            ) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(
-                this.currentFocus?.windowToken,
-                InputMethodManager.HIDE_NOT_ALWAYS
-            )
-        }
-    }
-
     private fun checkIdValid() {
-        authSignUpViewModel.username.observe(this) { id ->
+        authSignUpViewModel.id.observe(this) { id ->
             Log.e("id", "${id}")
             if (id.isNullOrBlank() || authSignUpViewModel.isIdValid()) {
                 binding.tvSignUpId.error = null
@@ -67,37 +54,20 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        binding.signUp.setOnClickListener {
-            val id = binding.etSignUpId.text.toString()
-            val password = binding.etSignUpPw.text.toString()
-            val nickname = binding.etSignUpName.text.toString()
-
-            Log.e("사용자 정보", "${id}, ${password}, ${nickname}")
-
-            authSignUpViewModel.signUp(
-                username = id,
-                password = password,
-                nickname = nickname
-            )
-
-            authSignUpViewModel.signUpSuccess.observe(this) {
-                Log.e("signup", "${it}")
-                if (it) {
-                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                    startActivity(
-                        Intent(
-                            this,
-                            LoginActivity::class.java,
-                        )
+        authSignUpViewModel.signUpSuccess.observe(this) {
+            Log.e("signup", "${it}")
+            if (it) {
+                Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                startActivity(
+                    Intent(
+                        this,
+                        LoginActivity::class.java,
                     )
-                    Log.e("btn", "넘어가나?")
-                } else {
-                    Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
-                }
+                )
+                Log.e("btn", "넘어가나?")
+            } else {
+                Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 }
-
-

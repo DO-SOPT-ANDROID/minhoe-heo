@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/et_sign_up_id"
-                android:text="@={authSignUpViewModel.username}" />
+                android:text="@={authSignUpViewModel.id}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -105,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="60dp"
             android:text="@string/sign_up"
+            android:onClick="@{() -> authSignUpViewModel.signUp()}"
             android:enabled="@{authSignUpViewModel.checkBtnEnabled}"
             android:background="@{authSignUpViewModel.checkBtnEnabled? @drawable/rectangle_btn_pink : @drawable/rectangle_btn_gray}"
             app:layout_constraintBottom_toBottomOf="parent" />
