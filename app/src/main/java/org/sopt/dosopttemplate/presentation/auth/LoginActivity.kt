@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
@@ -64,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
 
                     else -> {}
                 }
-            }
+            }.launchIn(lifecycleScope)
         }
     }
 }
