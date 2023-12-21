@@ -1,13 +1,15 @@
 package org.sopt.dosopttemplate.presentation.auth
 
 import android.util.Log
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.data.model.LoginState
 import org.sopt.dosopttemplate.data.model.request.RequestLoginDto
@@ -19,35 +21,42 @@ class AuthViewModel : ViewModel() {
     private val _isLoginState = MutableStateFlow<LoginState>(LoginState.Loading)
     val isLoginState: StateFlow<LoginState> = _isLoginState.asStateFlow()
 
-
     private val _isSignUpSuccessful = MutableLiveData<Boolean>()
     val isSignUpSuccessful: MutableLiveData<Boolean>
         get() = _isSignUpSuccessful
 
-    val id = MutableLiveData("")
-    val password = MutableLiveData("")
-    val nickname = MutableLiveData("")
-    val mbti = MutableLiveData("")
+    val id = MutableStateFlow("")
+    val password = MutableStateFlow("")
+    val nickname = MutableStateFlow("")
+    val mbti = MutableStateFlow("")
 
     val loginId = MutableStateFlow("")
     val loginPassword = MutableStateFlow("")
 
-    val checkBtnEnabled = MediatorLiveData<Boolean>().apply {
-        listOf(id, nickname, password, mbti).forEach { source ->
-            addSource(source) { value = isSignUpValid() }
-        }
-    }
+    val checkBtnEnabled: StateFlow<Boolean> = combine(
+        id,
+        password,
+        nickname,
+        mbti
+    ) { idValue, passwordValue, nicknameValue, mbtiValue ->
+        isSignUpValid(idValue, passwordValue, nicknameValue, mbtiValue)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), initialValue = false)
 
-    private fun isSignUpValid(): Boolean {
+    private fun isSignUpValid(
+        id: String,
+        password: String,
+        nickname: String,
+        mbti: String
+    ): Boolean {
         Log.e("signupnetwork", "싸인업")
-        return isIdValid()
-                && isPwValid()
-                && !nickname.value.isNullOrBlank()
-                && !mbti.value.isNullOrBlank()
+        return isIdValid(id)
+                && isPwValid(password)
+                && !nickname.isNullOrBlank()
+                && !mbti.isNullOrBlank()
     }
 
-    fun isIdValid() = id.value?.matches(ID_REGEX.toRegex()) ?: false
-    fun isPwValid() = password.value?.matches(PW_REGEX.toRegex()) ?: false
+    fun isIdValid(id: String) = id.matches(ID_REGEX.toRegex()) ?: false
+    fun isPwValid(password: String) = password.matches(PW_REGEX.toRegex()) ?: false
 
     fun login() {
         viewModelScope.launch {
