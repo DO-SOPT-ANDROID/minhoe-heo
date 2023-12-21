@@ -16,8 +16,8 @@ import org.sopt.dosopttemplate.data.model.service.ServicePool.authService
 
 class AuthViewModel : ViewModel() {
 
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
-    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
+    private val _isLoginState = MutableStateFlow<LoginState>(LoginState.Loading)
+    val isLoginState: StateFlow<LoginState> = _isLoginState.asStateFlow()
 
 
     private val _isSignUpSuccessful = MutableLiveData<Boolean>()
@@ -29,11 +29,8 @@ class AuthViewModel : ViewModel() {
     val nickname = MutableLiveData("")
     val mbti = MutableLiveData("")
 
-    private val _loginId = MutableStateFlow("")
-    val loginId: StateFlow<String> = _loginId
-
-    private val _loginPassword = MutableStateFlow("")
-    val loginPassword: StateFlow<String> = _loginPassword
+    val loginId = MutableStateFlow("")
+    val loginPassword = MutableStateFlow("")
 
     val checkBtnEnabled = MediatorLiveData<Boolean>().apply {
         listOf(id, nickname, password, mbti).forEach { source ->
@@ -52,7 +49,6 @@ class AuthViewModel : ViewModel() {
     fun isIdValid() = id.value?.matches(ID_REGEX.toRegex()) ?: false
     fun isPwValid() = password.value?.matches(PW_REGEX.toRegex()) ?: false
 
-
     fun login() {
         viewModelScope.launch {
             kotlin.runCatching {
@@ -67,18 +63,18 @@ class AuthViewModel : ViewModel() {
                     200 -> {
                         val body = it.body()
                         if (body != null) {
-                            _loginState.value = LoginState.Success(body)
+                            _isLoginState.value = LoginState.Success(body)
                         } else {
-                            _loginState.value = LoginState.Error
+                            _isLoginState.value = LoginState.Error
                         }
                     }
 
                     400 -> {
-                        _loginState.value = LoginState.Error
+                        _isLoginState.value = LoginState.Error
                     }
                 }
             }.onFailure {
-                _loginState.value = LoginState.Error
+                _isLoginState.value = LoginState.Error
             }
         }
     }

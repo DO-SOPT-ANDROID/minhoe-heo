@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.data.model.LoginState
@@ -44,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeLoginResult() {
         lifecycleScope.launch {
-            authViewModel.loginState.collect { state ->
+            authViewModel.isLoginState.flowWithLifecycle(lifecycle).onEach { state ->
                 when (state) {
                     is LoginState.Success -> {
                         Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
@@ -60,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                     }
 
-                    else -> false
+                    else -> {}
                 }
             }
         }
