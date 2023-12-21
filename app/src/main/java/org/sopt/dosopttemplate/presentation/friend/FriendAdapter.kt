@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.List
+package org.sopt.dosopttemplate.presentation.friend
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.List
+package org.sopt.dosopttemplate.presentation.friend
 
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.dosopttemplate.databinding.ItemFriendBinding
