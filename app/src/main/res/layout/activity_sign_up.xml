@@ -7,14 +7,14 @@
 
         <variable
             name="authSignUpViewModel"
-            type="org.sopt.dosopttemplate.AuthViewModel" />
+            type="org.sopt.dosopttemplate.presentation.auth.AuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="20dp"
-        tools:context=".SignUpActivity">
+        tools:context=".presentation.auth.SignUpActivity">
 
         <TextView
             android:id="@+id/tv_sign_up_title"
