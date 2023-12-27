@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.follower
+package org.sopt.dosopttemplate.ui.follower
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

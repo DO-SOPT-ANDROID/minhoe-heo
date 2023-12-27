@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.auth
+package org.sopt.dosopttemplate.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,13 +13,13 @@ import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.data.model.LoginState
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
-import org.sopt.dosopttemplate.presentation.home.HomeActivity
+import org.sopt.dosopttemplate.ui.home.HomeActivity
 import org.sopt.dosopttemplate.util.extension.hideKeyboard
 
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val authViewModel by viewModels<AuthViewModel>()
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
-        binding.authViewModel = authViewModel
+        binding.loginViewModel = loginViewModel
 
         observeLoginResult()
         addClickListener()
@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeLoginResult() {
         lifecycleScope.launch {
-            authViewModel.isLoginState.flowWithLifecycle(lifecycle).onEach { state ->
+            loginViewModel.isLoginState.flowWithLifecycle(lifecycle).onEach { state ->
                 when (state) {
                     is LoginState.Success -> {
                         Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()

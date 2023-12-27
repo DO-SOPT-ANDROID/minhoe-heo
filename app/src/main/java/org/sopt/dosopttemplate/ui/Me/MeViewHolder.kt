@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.Me
+package org.sopt.dosopttemplate.ui.Me
 
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.dosopttemplate.databinding.ItemMeBinding

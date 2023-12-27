@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.follower
+package org.sopt.dosopttemplate.ui.follower
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

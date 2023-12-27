@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.auth
+package org.sopt.dosopttemplate.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +16,7 @@ import org.sopt.dosopttemplate.util.extension.hideKeyboard
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    private val authSignUpViewModel by viewModels<AuthViewModel>()
+    private val signUpViewModel by viewModels<SignUpViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -24,7 +24,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
-        binding.authSignUpViewModel = authSignUpViewModel
+        binding.signUpViewModel = signUpViewModel
 
         checkIdValid()
         checkPwValid()
@@ -36,8 +36,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun checkIdValid() {
-        authSignUpViewModel.id.flowWithLifecycle(lifecycle).onEach { id ->
-            if (!id.isNullOrBlank() && !authSignUpViewModel.isIdValid(id)) {
+        signUpViewModel.id.flowWithLifecycle(lifecycle).onEach { id ->
+            if (!id.isNullOrBlank() && !signUpViewModel.isIdValid(id)) {
                 binding.tvSignUpId.error = "영문, 숫자를 포함해 6-10자 이내로 쓰십시오"
             } else {
                 binding.tvSignUpId.error = null
@@ -47,8 +47,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun checkPwValid() {
-        authSignUpViewModel.password.flowWithLifecycle(lifecycle).onEach { password ->
-            if (!password.isNullOrBlank() && !authSignUpViewModel.isPwValid(password)) {
+        signUpViewModel.password.flowWithLifecycle(lifecycle).onEach { password ->
+            if (!password.isNullOrBlank() && !signUpViewModel.isPwValid(password)) {
                 binding.tvSignUpPw.error = "영문,숫자,특수문자를 포함해 6-12자 이내로 쓰십시오"
             } else {
                 binding.tvSignUpPw.error = null
@@ -57,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        authSignUpViewModel.isSignUpSuccessful.observe(this) {
+        signUpViewModel.isSignUpSuccessful.observe(this) {
             Log.e("signup", "${it}")
             if (it) {
                 Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()

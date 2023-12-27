@@ -1,12 +1,12 @@
-package org.sopt.dosopttemplate.presentation.home
+package org.sopt.dosopttemplate.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.databinding.ActivityHomeBinding
-import org.sopt.dosopttemplate.presentation.DoAndroid.DoAndroidFragment
-import org.sopt.dosopttemplate.presentation.MyPage.MyPageFragment
+import org.sopt.dosopttemplate.ui.DoAndroid.DoAndroidFragment
+import org.sopt.dosopttemplate.ui.MyPage.MyPageFragment
 
 class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding

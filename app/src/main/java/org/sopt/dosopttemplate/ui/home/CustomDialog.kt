@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.home
+package org.sopt.dosopttemplate.ui.home
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

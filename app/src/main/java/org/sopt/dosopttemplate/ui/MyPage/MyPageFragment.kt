@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.MyPage
+package org.sopt.dosopttemplate.ui.MyPage
 
 import android.os.Bundle
 import android.view.LayoutInflater

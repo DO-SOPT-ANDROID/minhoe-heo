@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.home
+package org.sopt.dosopttemplate.ui.home
 
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import org.sopt.dosopttemplate.data.model.response.ResponseFollowerDto
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
-import org.sopt.dosopttemplate.presentation.follower.FollowerAdapter
-import org.sopt.dosopttemplate.presentation.follower.FollowerViewModel
+import org.sopt.dosopttemplate.ui.follower.FollowerAdapter
+import org.sopt.dosopttemplate.ui.follower.FollowerViewModel
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null

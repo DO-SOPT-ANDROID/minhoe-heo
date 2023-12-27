@@ -16,11 +16,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.auth.SignUpActivity"
+            android:name=".ui.auth.SignUpActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
-            android:name=".presentation.auth.LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
     </application>
