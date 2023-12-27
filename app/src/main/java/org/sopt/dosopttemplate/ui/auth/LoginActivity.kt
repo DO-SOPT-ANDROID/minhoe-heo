@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.isLoginState.flowWithLifecycle(lifecycle).onEach { state ->
                 when (state) {
                     is LoginState.Success -> {
-                        toast("로그인 성공")
+                        toast(getString(R.string.login_success))
                         startActivity(
                             Intent(
                                 this@LoginActivity,
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     LoginState.Error -> {
-                        toast("로그인 실패")
+                        toast(getString(R.string.login_fail))
                     }
 
                     else -> {}

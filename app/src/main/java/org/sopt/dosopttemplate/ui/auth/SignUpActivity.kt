@@ -38,7 +38,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun checkIdValid() {
         signUpViewModel.id.flowWithLifecycle(lifecycle).onEach { id ->
             if (!id.isNullOrBlank() && !signUpViewModel.isIdValid(id)) {
-                binding.tvSignUpId.error = "영문, 숫자를 포함해 6-10자 이내로 쓰십시오"
+                binding.tvSignUpId.error = getString(R.string.check_id_valid)
             } else {
                 binding.tvSignUpId.error = null
             }
@@ -49,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun checkPwValid() {
         signUpViewModel.password.flowWithLifecycle(lifecycle).onEach { password ->
             if (!password.isNullOrBlank() && !signUpViewModel.isPwValid(password)) {
-                binding.tvSignUpPw.error = "영문,숫자,특수문자를 포함해 6-12자 이내로 쓰십시오"
+                binding.tvSignUpPw.error = getString(R.string.check_pw_valid)
             } else {
                 binding.tvSignUpPw.error = null
             }
@@ -60,7 +60,7 @@ class SignUpActivity : AppCompatActivity() {
         signUpViewModel.isSignUpSuccessful.observe(this) {
             Log.e("signup", "${it}")
             if (it) {
-                toast("회원가입 성공")
+                toast(getString(R.string.signup_success))
                 startActivity(
                     Intent(
                         this,
@@ -69,7 +69,7 @@ class SignUpActivity : AppCompatActivity() {
                 )
                 Log.e("btn", "넘어가나?")
             } else {
-                toast("회원가입 실패")
+                toast(getString(R.string.signup_fail))
             }
         }
     }
