@@ -2,7 +2,6 @@ package org.sopt.dosopttemplate.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
@@ -15,6 +14,7 @@ import org.sopt.dosopttemplate.data.model.LoginState
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 import org.sopt.dosopttemplate.ui.home.HomeActivity
 import org.sopt.dosopttemplate.util.extension.hideKeyboard
+import org.sopt.dosopttemplate.util.extension.toast
 
 
 class LoginActivity : AppCompatActivity() {
@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             loginViewModel.isLoginState.flowWithLifecycle(lifecycle).onEach { state ->
                 when (state) {
                     is LoginState.Success -> {
-                        Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        toast("로그인 성공")
                         startActivity(
                             Intent(
                                 this@LoginActivity,
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     LoginState.Error -> {
-                        Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                        toast("로그인 실패")
                     }
 
                     else -> {}
@@ -69,4 +69,3 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 }
-

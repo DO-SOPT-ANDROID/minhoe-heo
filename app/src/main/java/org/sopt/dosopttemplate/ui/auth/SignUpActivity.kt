@@ -3,7 +3,6 @@ package org.sopt.dosopttemplate.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.onEach
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
 import org.sopt.dosopttemplate.util.extension.hideKeyboard
+import org.sopt.dosopttemplate.util.extension.toast
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -60,7 +60,7 @@ class SignUpActivity : AppCompatActivity() {
         signUpViewModel.isSignUpSuccessful.observe(this) {
             Log.e("signup", "${it}")
             if (it) {
-                Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                toast("회원가입 성공")
                 startActivity(
                     Intent(
                         this,
@@ -69,7 +69,7 @@ class SignUpActivity : AppCompatActivity() {
                 )
                 Log.e("btn", "넘어가나?")
             } else {
-                Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                toast("회원가입 실패")
             }
         }
     }
