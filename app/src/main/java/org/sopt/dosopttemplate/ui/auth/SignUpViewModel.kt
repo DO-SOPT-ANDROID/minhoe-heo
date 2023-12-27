@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.auth
+package org.sopt.dosopttemplate.ui.auth
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -7,19 +7,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.model.LoginState
-import org.sopt.dosopttemplate.data.model.request.RequestLoginDto
 import org.sopt.dosopttemplate.data.model.request.RequestSignUpDto
-import org.sopt.dosopttemplate.data.model.service.ServicePool.authService
+import org.sopt.dosopttemplate.data.model.service.ServicePool
 
-class AuthViewModel : ViewModel() {
-
-    private val _isLoginState = MutableStateFlow<LoginState>(LoginState.Loading)
-    val isLoginState: StateFlow<LoginState> = _isLoginState.asStateFlow()
+class SignUpViewModel : ViewModel() {
 
     private val _isSignUpSuccessful = MutableLiveData<Boolean>()
     val isSignUpSuccessful: MutableLiveData<Boolean>
@@ -29,9 +23,6 @@ class AuthViewModel : ViewModel() {
     val password = MutableStateFlow("")
     val nickname = MutableStateFlow("")
     val mbti = MutableStateFlow("")
-
-    val loginId = MutableStateFlow("")
-    val loginPassword = MutableStateFlow("")
 
     val checkBtnEnabled: StateFlow<Boolean> = combine(
         id,
@@ -55,43 +46,13 @@ class AuthViewModel : ViewModel() {
                 && !mbti.isNullOrBlank()
     }
 
-    fun isIdValid(id: String) = id.matches(ID_REGEX.toRegex()) ?: false
-    fun isPwValid(password: String) = password.matches(PW_REGEX.toRegex()) ?: false
-
-    fun login() {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                authService.login(
-                    RequestLoginDto(
-                        loginId.value ?: "",
-                        loginPassword.value ?: ""
-                    )
-                )
-            }.onSuccess {
-                when (it.code()) {
-                    200 -> {
-                        val body = it.body()
-                        if (body != null) {
-                            _isLoginState.value = LoginState.Success(body)
-                        } else {
-                            _isLoginState.value = LoginState.Error
-                        }
-                    }
-
-                    400 -> {
-                        _isLoginState.value = LoginState.Error
-                    }
-                }
-            }.onFailure {
-                _isLoginState.value = LoginState.Error
-            }
-        }
-    }
+    fun isIdValid(id: String) = id.matches(ID_REGEX.toRegex())
+    fun isPwValid(password: String) = password.matches(PW_REGEX.toRegex())
 
     fun signUp() {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.signUp(
+                ServicePool.authService.signUp(
                     RequestSignUpDto(
                         id.value ?: "",
                         nickname.value ?: "",
@@ -113,4 +74,3 @@ class AuthViewModel : ViewModel() {
             "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&.])[A-Za-z[0-9]\$@\$!%*#?&.]{6,12}\$"
     }
 }
-
