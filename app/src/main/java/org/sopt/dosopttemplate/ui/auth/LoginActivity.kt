@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.data.model.LoginState
+import org.sopt.dosopttemplate.data.entity.LoginState
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 import org.sopt.dosopttemplate.ui.home.HomeActivity
 import org.sopt.dosopttemplate.util.extension.hideKeyboard

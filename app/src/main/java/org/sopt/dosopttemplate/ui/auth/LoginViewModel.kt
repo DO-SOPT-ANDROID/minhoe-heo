@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.model.LoginState
-import org.sopt.dosopttemplate.data.model.request.RequestLoginDto
-import org.sopt.dosopttemplate.data.model.service.ServicePool.authService
+import org.sopt.dosopttemplate.data.entity.LoginState
+import org.sopt.dosopttemplate.data.entity.request.RequestLoginDto
+import org.sopt.dosopttemplate.data.entity.service.ServicePool.loginService
 
 class LoginViewModel : ViewModel() {
 
@@ -21,7 +21,7 @@ class LoginViewModel : ViewModel() {
     fun login() {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.login(
+                loginService.login(
                     RequestLoginDto(
                         loginId.value ?: "",
                         loginPassword.value ?: ""

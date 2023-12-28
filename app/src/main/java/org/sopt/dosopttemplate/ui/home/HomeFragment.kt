@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import org.sopt.dosopttemplate.data.model.response.ResponseFollowerDto
+import org.sopt.dosopttemplate.data.entity.response.ResponseFollowerDto
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
 import org.sopt.dosopttemplate.ui.follower.FollowerAdapter
 import org.sopt.dosopttemplate.ui.follower.FollowerViewModel

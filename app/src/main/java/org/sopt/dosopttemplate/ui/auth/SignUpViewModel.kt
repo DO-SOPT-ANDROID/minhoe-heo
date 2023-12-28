@@ -1,6 +1,7 @@
 package org.sopt.dosopttemplate.ui.auth
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,13 +11,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.model.request.RequestSignUpDto
-import org.sopt.dosopttemplate.data.model.service.ServicePool
+import org.sopt.dosopttemplate.data.entity.request.RequestSignUpDto
+import org.sopt.dosopttemplate.data.entity.service.ServicePool
 
 class SignUpViewModel : ViewModel() {
 
     private val _isSignUpSuccessful = MutableLiveData<Boolean>()
-    val isSignUpSuccessful: MutableLiveData<Boolean>
+    val isSignUpSuccessful: LiveData<Boolean>
         get() = _isSignUpSuccessful
 
     val id = MutableStateFlow("")
@@ -52,7 +53,7 @@ class SignUpViewModel : ViewModel() {
     fun signUp() {
         viewModelScope.launch {
             kotlin.runCatching {
-                ServicePool.authService.signUp(
+                ServicePool.signUpService.signUp(
                     RequestSignUpDto(
                         id.value ?: "",
                         nickname.value ?: "",

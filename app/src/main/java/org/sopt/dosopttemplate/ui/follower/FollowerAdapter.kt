@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import org.sopt.dosopttemplate.data.model.response.ResponseFollowerDto
+import org.sopt.dosopttemplate.data.entity.response.ResponseFollowerDto
 import org.sopt.dosopttemplate.databinding.ItemFollowerBinding
 import org.sopt.dosopttemplate.util.extension.ItemDiffCallback
 

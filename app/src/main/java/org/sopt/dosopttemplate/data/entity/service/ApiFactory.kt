@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.data.model.service
+package org.sopt.dosopttemplate.data.entity.service
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -49,6 +49,7 @@ object ReqresApiFactory {
 }
 
 object ServicePool {
-    val authService = ApiFactory.create<AuthService>()
+    val loginService = ApiFactory.create<LoginService>()
+    val signUpService = ApiFactory.create<SignUpService>()
     val followerService = ReqresApiFactory.create<FollowerService>()
 }

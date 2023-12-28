@@ -1,6 +1,6 @@
-package org.sopt.dosopttemplate.data.model
+package org.sopt.dosopttemplate.data.entity
 
-import org.sopt.dosopttemplate.data.model.response.ResponseLoginDto
+import org.sopt.dosopttemplate.data.entity.response.ResponseLoginDto
 
 sealed class LoginState {
     object Loading : LoginState()
