@@ -16,14 +16,17 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        transactionFragment()
+        clickBottomNavigation()
+    }
+
+    private fun transactionFragment() {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_home)
         if (currentFragment == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.fcv_home, DoAndroidFragment())
                 .commit()
         }
-
-        clickBottomNavigation()
     }
 
 
@@ -31,25 +34,12 @@ class HomeActivity : AppCompatActivity() {
         binding.bnvHome.setOnItemSelectedListener { item ->
 
             when (item.itemId) {
-                R.id.menu_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
-
-                R.id.menu_do_android -> {
-                    replaceFragment(DoAndroidFragment())
-                    true
-                }
-
-                R.id.menu_mypage -> {
-                    replaceFragment(MyPageFragment())
-                    true
-                }
-
-                else -> false
+                R.id.menu_home -> replaceFragment(HomeFragment())
+                R.id.menu_do_android -> replaceFragment(DoAndroidFragment())
+                R.id.menu_mypage -> replaceFragment(MyPageFragment())
             }
+            true
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
