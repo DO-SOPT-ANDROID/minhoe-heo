@@ -7,10 +7,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.data.entity.LoginState
-import org.sopt.dosopttemplate.data.entity.request.RequestLoginDto
-import org.sopt.dosopttemplate.data.entity.service.ServicePool.loginService
+import org.sopt.dosopttemplate.data.entity.response.ResponseLoginDto
+import org.sopt.dosopttemplate.domain.repository.LoginRepository
 
-class LoginViewModel : ViewModel() {
+
+class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
     private val _isLoginState = MutableStateFlow<LoginState>(LoginState.Loading)
     val isLoginState: StateFlow<LoginState> = _isLoginState.asStateFlow()
@@ -18,29 +19,22 @@ class LoginViewModel : ViewModel() {
     val loginId = MutableStateFlow("")
     val loginPassword = MutableStateFlow("")
 
+
     fun login() {
         viewModelScope.launch {
             kotlin.runCatching {
-                loginService.login(
-                    RequestLoginDto(
-                        loginId.value ?: "",
-                        loginPassword.value ?: ""
-                    )
+                loginRepository.login(
+                    loginId.value,
+                    loginPassword.value
                 )
-            }.onSuccess {
-                when (it.code()) {
-                    200 -> {
-                        val body = it.body()
-                        if (body != null) {
-                            _isLoginState.value = LoginState.Success(body)
-                        } else {
-                            _isLoginState.value = LoginState.Error
-                        }
-                    }
-
-                    400 -> {
-                        _isLoginState.value = LoginState.Error
-                    }
+            }.onSuccess { result ->
+                val userData = result.getOrNull()
+                userData?.let {
+                    val userInfo =
+                        ResponseLoginDto.UserInfo(it.id, it.username, it.nickname)
+                    _isLoginState.value = LoginState.Success(userInfo)
+                } ?: run {
+                    _isLoginState.value = LoginState.Error
                 }
             }.onFailure {
                 _isLoginState.value = LoginState.Error

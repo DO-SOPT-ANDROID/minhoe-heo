@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import org.sopt.dosopttemplate.data.entity.response.ResponseFollowerDto
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
+import org.sopt.dosopttemplate.domain.model.Follower
 import org.sopt.dosopttemplate.ui.follower.FollowerAdapter
 import org.sopt.dosopttemplate.ui.follower.FollowerViewModel
 
@@ -33,13 +33,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.loadFollowerData()
-        viewModel.followerData.observe(viewLifecycleOwner, Observer { data ->
+        viewModel.followerList.observe(viewLifecycleOwner, Observer { data ->
             setAdapter(data)
             Log.d("뷰모델", data.toString())
         })
     }
 
-    private fun setAdapter(followerList: List<ResponseFollowerDto.FollowerData>?) {
+    private fun setAdapter(followerList: List<Follower>) {
         Log.e("어댑터 연결 성공", followerList.toString())
         val followerAdapter = FollowerAdapter()
         binding.rvFollower.adapter = followerAdapter

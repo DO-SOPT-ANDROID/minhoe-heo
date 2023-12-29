@@ -11,10 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.entity.request.RequestSignUpDto
-import org.sopt.dosopttemplate.data.entity.service.ServicePool
+import org.sopt.dosopttemplate.domain.repository.SignUpRepository
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewModel() {
 
     private val _isSignUpSuccessful = MutableLiveData<Boolean>()
     val isSignUpSuccessful: LiveData<Boolean>
@@ -53,12 +52,10 @@ class SignUpViewModel : ViewModel() {
     fun signUp() {
         viewModelScope.launch {
             kotlin.runCatching {
-                ServicePool.signUpService.signUp(
-                    RequestSignUpDto(
-                        id.value ?: "",
-                        nickname.value ?: "",
-                        password.value ?: ""
-                    )
+                signUpRepository.signUp(
+                    id.value,
+                    password.value,
+                    nickname.value
                 )
             }.onSuccess {
                 _isSignUpSuccessful.value = true

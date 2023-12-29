@@ -1,38 +1,31 @@
 package org.sopt.dosopttemplate.ui.follower
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.sopt.dosopttemplate.data.model.response.ResponseFollowerDto
-import org.sopt.dosopttemplate.data.model.service.ServicePool
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import org.sopt.dosopttemplate.domain.model.Follower
+import org.sopt.dosopttemplate.domain.repository.FollowerRepository
+import timber.log.Timber
 
 
-class FollowerViewModel : ViewModel() {
+class FollowerViewModel(val followerRepository: FollowerRepository) : ViewModel() {
 
-    private var _followerData = MutableLiveData<List<ResponseFollowerDto.FollowerData>?>()
-    var followerData = _followerData
+    private val _followerList = MutableLiveData<List<Follower>>(listOf())
+    val followerList: LiveData<List<Follower>> get() = _followerList
 
-    //서버에서 ui 관련 정보 받아오기
     fun loadFollowerData() {
-        ServicePool.followerService.follower().enqueue(object : Callback<ResponseFollowerDto> {
-            override fun onResponse(
-                call: Call<ResponseFollowerDto>,
-                response: Response<ResponseFollowerDto>
-            ) {
-                if (response.isSuccessful) {
-                    Log.e("서버 통신 성공", response.body()?.data.toString())
-                    val followerList: List<ResponseFollowerDto.FollowerData>? =
-                        response.body()?.data
-                    _followerData.value = followerList
-                }
+        viewModelScope.launch {
+            kotlin.runCatching {
+                followerRepository.loadFollowerData()
+                    .onSuccess { data ->
+                        _followerList.value = data
+                    }
+                    .onFailure {
+                        Timber.d("서버 통신 실패")
+                    }
             }
-
-            override fun onFailure(call: Call<ResponseFollowerDto>, t: Throwable) {
-                Log.e("서버 통신 실패", t.message.toString())
-            }
-        })
+        }
     }
 }
