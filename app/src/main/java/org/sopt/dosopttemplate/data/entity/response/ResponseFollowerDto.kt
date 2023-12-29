@@ -2,6 +2,7 @@ package org.sopt.dosopttemplate.data.entity.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.sopt.dosopttemplate.domain.model.Follower
 
 @Serializable
 data class ResponseFollowerDto(
@@ -40,5 +41,13 @@ data class ResponseFollowerDto(
         val text: String
     )
 
+    fun toFollower() = data.map { data ->
+        Follower(
+            id = data.id,
+            avatar = data.avatar,
+            email = data.email,
+            firstName = data.firstName
+        )
+    }
 }
 
