@@ -19,4 +19,10 @@
     <string name="tv_do_android_bnv_title">안봉이들 화이팅</string>
     <string name="main_id">ID</string>
     <string name="main_mbti">MBTI</string>
+    <string name="check_id_valid">영문, 숫자를 포함해 6-10자 이내로 쓰십시오</string>
+    <string name="check_pw_valid">영문,숫자,특수문자를 포함해 6-12자 이내로 쓰십시오</string>
+    <string name="signup_success">회원가입 성공</string>
+    <string name="signup_fail">회원가입 실패</string>
+    <string name="login_success">로그인 성공</string>
+    <string name="login_fail">로그인 실패</string>
 </resources>

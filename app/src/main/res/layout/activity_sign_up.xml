@@ -6,15 +6,15 @@
     <data>
 
         <variable
-            name="authSignUpViewModel"
-            type="org.sopt.dosopttemplate.presentation.auth.AuthViewModel" />
+            name="signUpViewModel"
+            type="org.sopt.dosopttemplate.ui.auth.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="20dp"
-        tools:context=".presentation.auth.SignUpActivity">
+        tools:context=".ui.auth.SignUpActivity">
 
         <TextView
             android:id="@+id/tv_sign_up_title"
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/et_sign_up_id"
-                android:text="@={authSignUpViewModel.id}" />
+                android:text="@={signUpViewModel.id}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/et_sign_up_pw"
                 android:inputType="textPassword"
-                android:text="@={authSignUpViewModel.password}" />
+                android:text="@={signUpViewModel.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,7 +77,7 @@
                 android:id="@+id/et_sign_up_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={authSignUpViewModel.nickname}"
+                android:text="@={signUpViewModel.nickname}"
                 android:hint="@string/et_sign_up_name" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/et_sign_up_mbti"
-                android:text="@={authSignUpViewModel.mbti}"
+                android:text="@={signUpViewModel.mbti}"
                 android:inputType="textCapCharacters" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,9 +105,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="60dp"
             android:text="@string/sign_up"
-            android:onClick="@{() -> authSignUpViewModel.signUp()}"
-            android:enabled="@{authSignUpViewModel.checkBtnEnabled}"
-            android:background="@{authSignUpViewModel.checkBtnEnabled? @drawable/rectangle_btn_pink : @drawable/rectangle_btn_gray}"
+            android:onClick="@{() -> signUpViewModel.signUp()}"
+            android:enabled="@{signUpViewModel.checkBtnEnabled}"
+            android:background="@{signUpViewModel.checkBtnEnabled? @drawable/rectangle_btn_pink : @drawable/rectangle_btn_gray}"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
