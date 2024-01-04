@@ -2,6 +2,7 @@ package org.sopt.dosopttemplate.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,9 +10,11 @@ import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.data.entity.LoginState
 import org.sopt.dosopttemplate.data.entity.response.ResponseLoginDto
 import org.sopt.dosopttemplate.domain.repository.LoginRepository
+import javax.inject.Inject
 
-
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) :
+    ViewModel() {
 
     private val _isLoginState = MutableStateFlow<LoginState>(LoginState.Loading)
     val isLoginState: StateFlow<LoginState> = _isLoginState.asStateFlow()

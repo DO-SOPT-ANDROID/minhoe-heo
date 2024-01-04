@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -12,8 +13,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.domain.repository.SignUpRepository
+import javax.inject.Inject
 
-class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(private val signUpRepository: SignUpRepository) :
+    ViewModel() {
 
     private val _isSignUpSuccessful = MutableLiveData<Boolean>()
     val isSignUpSuccessful: LiveData<Boolean>

@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.data.entity.service
+package org.sopt.dosopttemplate.di
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -8,6 +8,9 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.dosopttemplate.BuildConfig
+import org.sopt.dosopttemplate.data.entity.service.FollowerService
+import org.sopt.dosopttemplate.data.entity.service.LoginService
+import org.sopt.dosopttemplate.data.entity.service.SignUpService
 import retrofit2.Retrofit
 
 object ApiFactory {

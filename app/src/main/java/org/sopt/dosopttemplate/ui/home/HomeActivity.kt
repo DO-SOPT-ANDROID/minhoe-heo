@@ -3,11 +3,13 @@ package org.sopt.dosopttemplate.ui.home
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.databinding.ActivityHomeBinding
 import org.sopt.dosopttemplate.ui.DoAndroid.DoAndroidFragment
 import org.sopt.dosopttemplate.ui.MyPage.MyPageFragment
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding
 

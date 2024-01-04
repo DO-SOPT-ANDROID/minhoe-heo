@@ -4,8 +4,9 @@ import org.sopt.dosopttemplate.data.datasource.LoginDataSource
 import org.sopt.dosopttemplate.data.entity.request.RequestLoginDto
 import org.sopt.dosopttemplate.data.entity.response.ResponseLoginDto
 import org.sopt.dosopttemplate.domain.repository.LoginRepository
+import javax.inject.Inject
 
-class LoginRepositoryImpl(private val loginDataSource: LoginDataSource) :
+class LoginRepositoryImpl @Inject constructor(private val loginDataSource: LoginDataSource) :
     LoginRepository {
     override suspend fun login(
         username: String,
